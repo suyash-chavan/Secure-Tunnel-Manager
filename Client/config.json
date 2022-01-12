@@ -1,0 +1,7 @@
+{
+    "WATCHMAN_IP": "127.0.0.1",
+    "WATCHMAN_PORT": "8888",
+    "DEDICATED_PORT": "0000",
+    "CLIENT_ID": "101010101",
+    "WATCHMAN_USERNAME": "watchman"
+}
