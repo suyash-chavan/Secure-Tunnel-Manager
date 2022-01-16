@@ -4,6 +4,7 @@
             {
                 "applicationId": "",
                 "applicationName": "",
+                "applicationDataParameters": {"Timestamp": "timestamp"},
                 "clients":[
                     "clientID"
                 ]   

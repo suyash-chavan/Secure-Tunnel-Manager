@@ -3,14 +3,16 @@ import requests
 import pandas as pd
 from pymongo import MongoClient
 from datetime import datetime, time
-import socket
 import os
 import json
 from dotenv import load_dotenv
 import streamlit_authenticator as stauth
 from PIL import Image
+import math
 
 load_dotenv()
+
+SERVER_URI=os.getenv("SERVER_URI")
 
 wceLogo = Image.open('wce.png')
 
@@ -20,26 +22,105 @@ def convert_df(df):
 
 def loggedIn():
 
-    st.sidebar.markdown('Welcome **%s** <hr />'% (name),unsafe_allow_html=True)
+    st.sidebar.markdown('Welcome **%s**, <hr />'% (name),unsafe_allow_html=True)
 
     
+    appreq = requests.get(SERVER_URI+"/dashboard/applications")
 
-    application = st.sidebar.selectbox(
+    apps = {}
+    appres = appreq.json()
+
+    for app in appres["applications"]:
+        apps[app["applicationName"]] = app["applicationId"]
+
+    selectedApp = st.sidebar.selectbox(
     "Application",
-    ("Mask Detection", "Fall Detection"))
+    apps.keys())
+
+    clientReq = requests.post(SERVER_URI+"/dashboard/clients",json = {
+            "applicationId": apps[selectedApp]
+    })
+
+    clients = {}
+
+    for client in clientReq.json()["clients"]:
+        clients[client["clientName"]] = client["clientId"]
 
     aggr = st.sidebar.checkbox('Data Aggregation')
 
     if(not aggr):
-        device = st.sidebar.selectbox(
+        devices = st.sidebar.selectbox(
         "Device Name",
-        ("CSE Dept", "ELN Dept"))
-    else:
-        options = st.sidebar.multiselect(
-     'Device Name',
-     ["CSE Dept", "ELN Dept"])
+        clients.keys())
 
-    csv = convert_df(pd.DataFrame(list()))
+        devices = [devices]
+    else:
+        devices = st.sidebar.multiselect(
+     'Device Name',
+     clients.keys())
+
+    reqClients = []
+
+    for device in devices:
+        reqClients.append(clients[device])
+
+    dataReq = requests.post(SERVER_URI+"/dashboard/data",json = {
+            "clientId": reqClients
+    })
+
+    dataJson = dataReq.json()["data"]
+
+    data = []
+
+    paraReq = requests.post(SERVER_URI+"/dashboard/headers",json = {
+            "applicationId": apps[selectedApp]
+    })
+
+    appData = paraReq.json()["dataParameters"]
+
+    headers = []
+    parameters = []
+
+    for header in appData:
+        headers.append(header)
+        parameters.append(appData[header])
+
+    for dataPoint in dataJson:
+        row = []
+
+        for header in headers:
+            row.append(dataPoint[header])
+
+        data.append(row)
+
+    df = pd.DataFrame(
+    data, headers)
+
+    if(not aggr):
+        st.header("Metrics")
+
+        metrics = requests.post(SERVER_URI+"/dashboard/metrics",json = {    
+                "clientId": reqClients[0],
+                "applicationId": apps[selectedApp]
+        })
+
+        metrics = metrics.json()["metrics"]
+        print(metrics)
+
+        metricRows = []
+
+        for i in range(math.ceil(len(metrics)/3)):
+            metricRows.append(st.columns(3))
+
+        for i in range(len(metricRows)):
+            for j in range(min(3,len(metrics)-(3*i))):
+                metricRows[i][j].metric(metrics[i*3+j]["name"], metrics[i*3+j]["value"])
+
+    st.header("Data")
+
+    st.table(df)
+
+    csv = convert_df(df)
 
     st.sidebar.download_button(
         label="Download data as CSV",
@@ -57,7 +138,8 @@ def loggedIn():
          be random.
      """)
     with st.sidebar.expander("Report Bug"):
-        st.write("""
+        st.write("""from inspect import Parameter
+
          The chart above shows some numbers I picked for you.
          I rolled actual dice for these, so they're *guaranteed* to
          be random.
