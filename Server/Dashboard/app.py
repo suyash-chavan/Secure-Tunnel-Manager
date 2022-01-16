@@ -105,7 +105,6 @@ def loggedIn():
         })
 
         metrics = metrics.json()["metrics"]
-        print(metrics)
 
         metricRows = []
 
