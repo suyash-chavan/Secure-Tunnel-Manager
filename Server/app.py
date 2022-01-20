@@ -49,9 +49,9 @@ def clientRegister():
         "clientMetrics": {}
     })
 
-    file1 = open(AUTHORIZED_KEYS_PATH, "a")
-    file1.write(json_data["clientKey"]+"\n")
-    file1.close()
+    f = open(AUTHORIZED_KEYS_PATH, "a")
+    f.write(json_data["clientKey"]+"\n")
+    f.close()
 
     return make_response(jsonify({
             "clientId": str(newClient.inserted_id),
