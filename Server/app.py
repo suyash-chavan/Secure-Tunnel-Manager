@@ -28,7 +28,7 @@ def check():
     return 'WATCHMAN on duty sir!'
 
 @app.route('/client/register', methods = ['POST'])
-def ClientRegister():
+def clientRegister():
     json_data = request.json
 
     dublicateClient = store["clients"].find_one({"clientKeyHash": hashlib.sha256(json_data["clientKey"].encode()).hexdigest()})
@@ -48,6 +48,10 @@ def ClientRegister():
         "clientData": {},
         "clientMetrics": {}
     })
+
+    file1 = open(AUTHORIZED_KEYS_PATH, "a")
+    file1.write(json_data["clientKey"]+"\n")
+    file1.close()
 
     return make_response(jsonify({
             "clientId": str(newClient.inserted_id),
