@@ -6,7 +6,7 @@ import pymongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 import os
-import hashlib
+import hashlib  
 import socket
 
 load_dotenv()
@@ -14,8 +14,6 @@ load_dotenv()
 app = Flask(__name__)
 
 MONGO_URI = os.getenv("MONGO_URI")
-print(MONGO_URI)
-
 AUTHORIZED_KEYS_PATH = "~/.ssh/authorized_keys"
 
 store = pymongo.MongoClient(MONGO_URI)["watchman"]
@@ -33,46 +31,45 @@ def check():
 def ClientRegister():
     json_data = request.json
 
-    dublicateClient = store["clients"].find({},{"clientKeyHash": hashlib.sha256(json_data["clientKey"].encode())})
+    dublicateClient = store["clients"].find_one({"clientKeyHash": hashlib.sha256(json_data["clientKey"].encode()).hexdigest()})
 
-    if(len(dublicateClient)!=0):
+    if(dublicateClient!=None):
         return make_response(jsonify({
-            "clientId": dublicateClient[0]._id,
-            "clientDedicatedPort": dublicateClient[0].clientDedicatedPort
+            "clientId": str(dublicateClient["_id"]),
+            "clientDedicatedPort": dublicateClient["clientDedicatedPort"]
         }), 401)
 
     dedicatedPort = getFreePort()
 
     newClient = store["clients"].insert_one({
         "clientName": json_data["clientName"],
-        "clientKeyHash": hashlib.sha256(json_data["clientKey"].encode()),
-        "clientDedicatedPort": dedicatedPort
+        "clientKeyHash": hashlib.sha256(json_data["clientKey"].encode()).hexdigest(),
+        "clientDedicatedPort": dedicatedPort,
+        "clientData": {},
+        "clientMetrics": {}
     })
 
     return make_response(jsonify({
-            "clientId": newClient.inserted_id,
+            "clientId": str(newClient.inserted_id),
             "clientDedicatedPort": dedicatedPort
     }), 200)
 
 @app.route('/client/awake', methods = ['POST'])
 def clientAwake():
-    reqData = json.loads(request.data)
+    reqData = request.json
 
-    client = store["clients"].find({
-        "clientName": reqData["clientName"],
-        "clientKeyHash" : hashlib.sha256(reqData["clientKey"].encode())
-    })
+    clientId = reqData["clientId"]
+    clientKey = reqData["clientKey"]
 
-    if(len(client)==0):
+    client = store["clients"].find_one({"clientKeyHash": hashlib.sha256(clientKey.encode()).hexdigest()})
+
+
+    if(client==None):
         return make_response(jsonify({
             "status": "Client not found!"
         }), 401)
 
-    client["clientData"].insert_one({
-        "application": reqData["application"],
-        "timestamp": time.time() * 1000,
-        "data": reqData["data"]
-    });
+    store["clients"].update_one({ "_id": ObjectId(clientId)}, {"$push": { "clientData."+"awake" :{ "timestamp": round(time.time() * 1000)} } } )
 
     return make_response(jsonify({
             "status": "Success"
@@ -108,12 +105,12 @@ def listClients():
 @app.route('/dashboard/data', methods = ['POST'])
 def appData():
     clientIds = request.json["clientId"]
+    applicationId = request.json["applicationId"]
 
     data = []
 
     for clientId in clientIds:
-        # print(store["clients"].find_one({"_id": ObjectId(clientId)}))
-        data.extend(store["clients"].find_one({"_id": ObjectId(clientId)})["clientData"])
+        data.extend(store["clients"].find_one({"_id": ObjectId(clientId)})["clientData"][applicationId])
 
     data.sort(reverse=True, key = lambda d:d["timestamp"])
 
@@ -144,6 +141,29 @@ def clientMetrics():
 
     return make_response(jsonify({
             "metrics": metrics,
+            "status": "Success"
+        }), 200)
+
+@app.route('/client/metrics', methods = ['POST'])
+def pushMetrics():
+    appId = request.json["applicationId"]
+    clientId = request.json["clientId"]
+
+    store["clients"].update_one({ "_id": ObjectId(clientId)}, { "$set": { "clientMetrics."+appId: request.json["metrics"] } } )
+
+    return make_response(jsonify({
+            "status": "Success"
+        }), 200)
+
+
+@app.route('/client/data', methods = ['POST'])
+def pushData():
+    appId = request.json["applicationId"]
+    clientId = request.json["clientId"]
+
+    store["clients"].update_one({ "_id": ObjectId(clientId)}, {"$push": { "clientData."+appId :{ "timestamp": round(time.time() * 1000), "data": request.json["data"] } } } )
+
+    return make_response(jsonify({
             "status": "Success"
         }), 200)
 

@@ -18,7 +18,10 @@
                 "clientDedicatedPort": "",
                 "clientData": [
                     {},{}
-                ]
+                ],
+                "metrics": {
+                    "applicaionId": {}
+                }
             }
         ],
         "credentials":[

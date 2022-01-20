@@ -65,7 +65,8 @@ def loggedIn():
         reqClients.append(clients[device])
 
     dataReq = requests.post(SERVER_URI+"/dashboard/data",json = {
-            "clientId": reqClients
+            "clientId": reqClients,
+            "applicationId": apps[selectedApp]
     })
 
     dataJson = dataReq.json()["data"]
