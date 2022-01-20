@@ -10,7 +10,7 @@ if [[ -z "${WATCHMAN_PASSWORD}" ]]; then
   exit
 fi
 
-usermod watchman
+useradd watchman
  
 usermod --password $(echo "$WATCHMAN_PASSWORD" | openssl passwd -1 -stdin) watchman
 
