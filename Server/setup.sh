@@ -5,7 +5,7 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-if [[ -z "${DEPLOY_ENV}" ]]; then
+if [[ -z "${WATCHMAN_PASSWORD}" ]]; then
   echo "You need to set env variable WATCHMAN_PASSWORD first."
   exit
 fi
