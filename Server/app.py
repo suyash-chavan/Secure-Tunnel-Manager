@@ -14,7 +14,7 @@ load_dotenv()
 app = Flask(__name__)
 
 MONGO_URI = os.getenv("MONGO_URI")
-AUTHORIZED_KEYS_PATH = "~/.ssh/authorized_keys"
+AUTHORIZED_KEYS_PATH = "/home/ec2-user/.ssh/authorized_keys"
 
 store = pymongo.MongoClient(MONGO_URI)["watchman"]
 
