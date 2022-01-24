@@ -90,12 +90,13 @@ def loggedIn():
         row = []
 
         for header in headers:
-            row.append(dataPoint[header])
+            if(header in dataPoint.keys()):
+                row.append(dataPoint[header])
 
         data.append(row)
 
     df = pd.DataFrame(
-    data, headers)
+    data, columns=parameters)
 
     if(not aggr):
         st.header("Metrics")

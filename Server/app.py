@@ -141,8 +141,6 @@ def clientMetrics():
 
     metrics = store["clients"].find_one({"_id": ObjectId(clientId)})["clientMetrics"][appId]
 
-    print(metrics)
-
     return make_response(jsonify({
             "metrics": metrics,
             "status": "Success"
@@ -165,7 +163,11 @@ def pushData():
     appId = request.json["applicationId"]
     clientId = request.json["clientId"]
 
-    store["clients"].update_one({ "_id": ObjectId(clientId)}, {"$push": { "clientData."+appId :{ "timestamp": round(time.time() * 1000), "data": request.json["data"] } } } )
+    data = request.json["data"]
+
+    data["timestamp"] = round(time.time() * 1000)
+
+    store["clients"].update_one({ "_id": ObjectId(clientId)}, {"$push": { "clientData."+appId : data } } )
 
     return make_response(jsonify({
             "status": "Success"

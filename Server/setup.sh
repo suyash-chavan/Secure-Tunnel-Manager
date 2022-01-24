@@ -11,13 +11,15 @@ if [[ -z "${WATCHMAN_PASSWORD}" ]]; then
 fi
 
 useradd watchman
- 
+
 usermod --password $(echo "$WATCHMAN_PASSWORD" | openssl passwd -1 -stdin) watchman
 
+DIR=/home/watchman/.ssh/
 FILE=/home/watchman/.ssh/authorized_keys
 
 if [ -f "$FILE" ]; then
     echo "$FILE exists."
 else 
+    mkdir $DIR
     touch $FILE
 fi
