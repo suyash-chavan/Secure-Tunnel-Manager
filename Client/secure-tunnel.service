@@ -2,12 +2,8 @@
 Description=This service opens secure tunnel.
 
 [Service]
-User=root
-WorkingDirectory=/root/Secure-Tunnel/
+Type=forking
 ExecStart=/usr/bin/python3 /root/Secure-Tunnel/autossh.py
-ExecStop=/bin/kill -INT $MAINPID
-ExecReload=/bin/kill -TERM $MAINPID
-Restart=always
 
 [Install]
 WantedBy=multi-user.target

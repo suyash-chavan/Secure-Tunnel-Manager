@@ -5,7 +5,7 @@ import subprocess
 import json
 import requests
 
-config_file = open("./config.json")
+config_file = open("/root/Secure-Tunnel/config.json")
 
 CONFIG = json.load(config_file)
 
