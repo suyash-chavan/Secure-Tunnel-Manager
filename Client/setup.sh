@@ -5,4 +5,10 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-ssh-keygen -q -t rsa -N '' <<< $'\ny' >/dev/null 2>&1
+apt install python3 openssh-server openssh-client autossh
+
+FILE=/root/.ssh/id_rsa
+if [ ! -f "$FILE" ]; then
+    ssh-keygen -q -t rsa -N '' <<< $'\ny' >/dev/null 2>&1
+    echo "Created Keys !"
+fi

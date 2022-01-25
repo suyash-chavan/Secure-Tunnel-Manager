@@ -4,7 +4,7 @@ Description=This service opens secure tunnel.
 [Service]
 User=root
 WorkingDirectory=/root/Secure-Tunnel/
-ExecStart=/usr/bin/python3 autossh.py
+ExecStart=/root/Secure-Tunnel/secure-tunnel.sh
 ExecStop=/bin/kill -INT $MAINPID
 ExecReload=/bin/kill -TERM $MAINPID
 Restart=always
