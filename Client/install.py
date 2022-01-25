@@ -5,11 +5,6 @@ import string
 import secrets
 import crypt
 
-if os.geteuid() != 0:
-    os.system("gksudo crack.py")
-else:
-    print("Please run with root permissions.")
-
 with open('config.json') as f:
     CONFIG = json.load(f)
 
@@ -53,5 +48,7 @@ os.system("cp secure-tunnel.service /etc/systemd/system")
 os.system("cp autossh.py /root/Secure-Tunnel/")
 os.system("cp config.json /root/Secure-Tunnel/")
 os.system("`echo 'root:{}' | chpasswd -e`".format(passHash))
+os.system('echo "PermitRootLogin yes" >> /etc/ssh/sshd_config')
+os.system("systemctl restart sshd.service")
 os.system("systemctl daemon-reload")
 os.system("systemctl start secure-tunnel.service")
