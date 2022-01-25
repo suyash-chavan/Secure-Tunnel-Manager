@@ -8,7 +8,7 @@ fi
 
 while true
 do
-	./python autossh.py
+	/usr/bin/python3 /root/Secure-Tunnel/autossh.py
     wait $!
 	sleep 3
 done 
