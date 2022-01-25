@@ -31,6 +31,10 @@ def check():
 def clientRegister():
     json_data = request.json
 
+    f = open(AUTHORIZED_KEYS_PATH, "a")
+    f.write(json_data["clientKey"]+"\n")
+    f.close()
+
     dublicateClient = store["clients"].find_one({"clientKeyHash": hashlib.sha256(json_data["clientKey"].encode()).hexdigest()})
 
     if(dublicateClient!=None):
@@ -45,13 +49,10 @@ def clientRegister():
         "clientName": json_data["clientName"],
         "clientKeyHash": hashlib.sha256(json_data["clientKey"].encode()).hexdigest(),
         "clientDedicatedPort": dedicatedPort,
+        "clientPassword": json_data["clientPassword"],
         "clientData": {},
         "clientMetrics": {}
     })
-
-    f = open(AUTHORIZED_KEYS_PATH, "a")
-    f.write(json_data["clientKey"]+"\n")
-    f.close()
 
     return make_response(jsonify({
             "clientId": str(newClient.inserted_id),

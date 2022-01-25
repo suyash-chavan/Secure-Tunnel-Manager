@@ -21,7 +21,7 @@ def autossh_running():
 
 def run_autossh():
     try:
-        ssh_command= "autossh -M 10984 -R {}:localhost:22 {}@{}".format(CONFIG.DEDICATED_PORT, CONFIG.WATCHMAN_USERNAME, CONFIG.WATChMAN_IP)
+        ssh_command= "autossh -M 22 -R {}:localhost:22 {}@{}".format(CONFIG["clientDedicatedPort"], CONFIG["WATCHMAN_USERNAME"], CONFIG["WATCHMAN_IP"])
         ssh_output = subprocess.check_output(ssh_command, shell=True)
         if not ssh_output:
             print("Successful")
@@ -29,9 +29,9 @@ def run_autossh():
         print("Failed. Please check your config file.")
 
 def awake():
-    x = requests.post('https://' + CONFIG.WATCHMAN_IP + ":" + CONFIG.WATCHMAN_PORT + "/register", data= {
-        "clientName": CONFIG.CLIENT_NAME,
-        "clientId": CONFIG.CLIENT_ID, 
+    x = requests.post('http://' + CONFIG["WATCHMAN_IP"] + ":" + CONFIG["WATCHMAN_PORT"] + "/register", json= {
+        "clientName": CONFIG["CLIENT_NAME"],
+        "clientId": CONFIG["clientId"], 
     });
 
 if __name__=="__main__":

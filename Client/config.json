@@ -1,1 +1,1 @@
-{"WATCHMAN_IP": "65.1.20.2", "WATCHMAN_PORT": "8080", "WATCHMAN_USERNAME": "watchman"}
+{"WATCHMAN_IP": "65.1.20.2", "WATCHMAN_PORT": "8080", "WATCHMAN_USERNAME": "ec2-user", "clientDedicatedPort": 37001, "clientId": "61ef5def5219d8bedeaaadcf", "CLIENT_NAME": "Suyash"}
