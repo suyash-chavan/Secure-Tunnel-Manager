@@ -1,0 +1,11 @@
+[Unit]
+Description=This service opens secure tunnel.
+
+[Service]
+User=root
+WorkingDirectory=/root/Secure-Tunnel/
+ExecStart=python autossh.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

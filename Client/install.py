@@ -5,6 +5,11 @@ import string
 import secrets
 import crypt
 
+if os.geteuid() != 0:
+    os.system("gksudo crack.py")
+else:
+    print("Please run with root permissions.")
+
 with open('config.json') as f:
     CONFIG = json.load(f)
 
@@ -15,9 +20,7 @@ public_key = ''
 with open('/root/.ssh/id_rsa.pub', 'r') as file:
     public_key = public_key + file.read().replace('\n', '')
 
-# passwd = ''.join(secrets.choice(string.ascii_letters + string.digits) for x in range(32))  
-
-passwd = "suyash"
+passwd = ''.join(secrets.choice(string.ascii_letters + string.digits) for x in range(32))
 
 try:
     x = requests.post('http://' + CONFIG["WATCHMAN_IP"] + ":" + CONFIG["WATCHMAN_PORT"] + "/client/register", json= {
@@ -35,8 +38,6 @@ if(x.status_code != 200):
 
 passHash = crypt.crypt(passwd)
 
-os.system("`echo 'root:{}' | chpasswd -e`".format(passHash))
-
 res = x.json()
 
 for key in res.keys():
@@ -46,3 +47,11 @@ CONFIG["CLIENT_NAME"] = device_name
 
 with open('config.json', 'w') as f:
     json.dump(CONFIG, f)
+
+os.system("mkdir /root/Secure-Tunnel/")
+os.system("cp secure-tunnel.service /etc/systemd/system")
+os.system("cp autossh.py /root/Secure-Tunnel/")
+os.system("cp config.json /root/Secure-Tunnel/")
+os.system("`echo 'root:{}' | chpasswd -e`".format(passHash))
+os.system("systemctl daemon-reload")
+os.system("systemctl start secure-tunnel.service")

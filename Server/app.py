@@ -43,7 +43,15 @@ def clientRegister():
             "clientDedicatedPort": dublicateClient["clientDedicatedPort"]
         }), 401)
 
-    dedicatedPort = getFreePort()
+    isPortFree = False
+    dedicatedPort = 0
+
+    while(not isPortFree):
+        dedicatedPort = getFreePort()
+        dublicateClient = store["clients"].find_one({"clientDedicatedPort": dedicatedPort})
+
+        if(dublicateClient==None):
+            isPortFree = True
 
     newClient = store["clients"].insert_one({
         "clientName": json_data["clientName"],
