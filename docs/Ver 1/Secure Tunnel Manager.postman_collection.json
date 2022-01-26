@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "93d9209d-9c5e-4999-b553-f663f0c6ad64",
+		"name": "Secure Tunnel Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Streamlit Dashboard",
+			"item": [
+				{
+					"name": "Get Applications",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"apiKey\": \"API Key\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{watchman_base}}/list/applications",
+							"host": [
+								"{{watchman_base}}"
+							],
+							"path": [
+								"list",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Clients",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"apiKey\": \"API Key\",\n    \"applicationId\": \"Application Id\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{watchman_base}}/list/clients",
+							"host": [
+								"{{watchman_base}}"
+							],
+							"path": [
+								"list",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"apiKey\": \"API Key\",\n    \"applicationId\": \"Application Id\",\n    \"clientId\": [\"List of Client IDs\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{watchman_base}}/dashboard/data",
+							"host": [
+								"{{watchman_base}}"
+							],
+							"path": [
+								"dashboard",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Headers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"apiKey\": \"API Key\",\n    \"applicationId\": \"Application Id\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{watchman_base}}/dashboard/headers",
+							"host": [
+								"{{watchman_base}}"
+							],
+							"path": [
+								"dashboard",
+								"headers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Metrics",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"apiKey\": \"API Key\",\n    \"applicationId\": \"Application Id\",\n    \"clientId\": \"Client Id\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{watchman_base}}/dashboard/metrics",
+							"host": [
+								"{{watchman_base}}"
+							],
+							"path": [
+								"dashboard",
+								"metrics"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Push Metrics",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientId\":\"Client Id\",\n    \"applicationId\": \"Application Id\",\n    \"clientKey\": \"Client SSH Public Key\",\n    \"metrics\": [\n        {\n            \"name\": \"metric1\", \n            \"value\": 10\n        },\n        {\n            \"name\": \"metric2\",\n            \"value\": \"someValue\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{watchman_base}}/client/metrics",
+							"host": [
+								"{{watchman_base}}"
+							],
+							"path": [
+								"client",
+								"metrics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Push Data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientId\": \"Client Id\",\n    \"clientKey\": \"Client SSH Public Key\",\n    \"applicationId\": \"Application Id\",\n    \"data\": {\n        \"key1\": \"value1\",\n        \"key2\": \"value2\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{watchman_base}}/client/data",
+							"host": [
+								"{{watchman_base}}"
+							],
+							"path": [
+								"client",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientName\": \"Preferred Client Name\",\n    \"clientPassword\": \"Root password of client\",\n    \"clientKey\": \"Client SSH Public Key\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{watchman_base}}/client/register",
+							"host": [
+								"{{watchman_base}}"
+							],
+							"path": [
+								"client",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Awake",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientId\": \"Client Id\",\n    \"clientKey\": \"Client SSH Public Key\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{watchman_base}}/client/awake",
+							"host": [
+								"{{watchman_base}}"
+							],
+							"path": [
+								"client",
+								"awake"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "Watchman URL",
+			"value": "watchman"
+		}
+	]
+}
