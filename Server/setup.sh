@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ "$EUID" -ne 0 ]
-  then echo "Please run as root"
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
   exit
 fi
 
@@ -18,8 +18,8 @@ DIR=/home/watchman/.ssh/
 FILE=/home/watchman/.ssh/authorized_keys
 
 if [ -f "$FILE" ]; then
-    echo "$FILE exists."
-else 
-    mkdir $DIR
-    touch $FILE
+  echo "$FILE exists."
+else
+  mkdir $DIR
+  touch $FILE
 fi
