@@ -149,9 +149,9 @@ def loggedIn():
 client = MongoClient(os.getenv('MONGO_URI'))
 
 
-names = json.loads(os.getenv('NAMES'))
-usernames = json.loads(os.getenv('USERNAMES'))
-passwords = json.loads(os.getenv('PASSWORDS'))
+names = eval(os.getenv('NAMES'))
+usernames = eval(os.getenv('USERNAMES'))
+passwords = eval(os.getenv('PASSWORDS'))
 
 hashed_passwords = stauth.hasher(passwords).generate()
 
