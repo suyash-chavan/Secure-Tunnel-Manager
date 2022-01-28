@@ -5,10 +5,21 @@ from flask import (
     jsonify)
 
 from bson.objectid import ObjectId
+from dotenv import load_dotenv
+import os
 
 from watchman.blueprints.database.mongodb import store
 
+load_dotenv()
+
 dashboardRoutes = Blueprint('dashboard', __name__)
+
+@dashboardRoutes.before_request
+def keyCheck():
+    if(request.json == None or  request.json["apiKey"] != os.getenv("API_KEY")):
+        return make_response(jsonify({
+            "status": "API Key Missing"
+        }), 401)
 
 @dashboardRoutes.route('/dashboard/applications', methods = ['GET'])
 def listApplications():
@@ -30,7 +41,8 @@ def listClients():
 
     for appClientId in store["applications"].find_one({ "_id": ObjectId(applicationId)})["clients"]:
         client = store["clients"].find_one({ "_id": ObjectId(appClientId)})
-        clients.append({"clientName": client["clientName"], "clientId": str(client["_id"])})
+        if(client!=None):
+            clients.append({"clientName": client["clientName"], "clientId": str(client["_id"])})
 
     return make_response(jsonify({
             "clients": clients,

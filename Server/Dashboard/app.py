@@ -13,6 +13,7 @@ import math
 load_dotenv()
 
 SERVER_URI=os.getenv("SERVER_URI")
+API_KEY = os.getenv("API_KEY")
 
 wceLogo = Image.open('wce.png')
 
@@ -25,7 +26,9 @@ def loggedIn():
     st.sidebar.markdown('Welcome **%s**, <hr />'% (name),unsafe_allow_html=True)
 
     
-    appreq = requests.get(SERVER_URI+"/dashboard/applications")
+    appreq = requests.get(SERVER_URI+"/dashboard/applications",json = {
+        "apiKey": API_KEY
+    })
 
     apps = {}
     appres = appreq.json()
@@ -38,7 +41,8 @@ def loggedIn():
     apps.keys())
 
     clientReq = requests.post(SERVER_URI+"/dashboard/clients",json = {
-            "applicationId": apps[selectedApp]
+            "applicationId": apps[selectedApp],
+            "apiKey": API_KEY
     })
 
     clients = {}
@@ -47,7 +51,7 @@ def loggedIn():
         clients[client["clientName"]] = client["clientId"]
 
     aggr = st.sidebar.checkbox('Data Aggregation')
-
+    
     if(not aggr):
         devices = st.sidebar.selectbox(
         "Device Name",
@@ -62,11 +66,13 @@ def loggedIn():
     reqClients = []
 
     for device in devices:
-        reqClients.append(clients[device])
+        if(device!=None):
+            reqClients.append(clients[device])
 
     dataReq = requests.post(SERVER_URI+"/dashboard/data",json = {
             "clientId": reqClients,
-            "applicationId": apps[selectedApp]
+            "applicationId": apps[selectedApp],
+            "apiKey": API_KEY
     })
 
     dataJson = dataReq.json()["data"]
@@ -74,7 +80,8 @@ def loggedIn():
     data = []
 
     paraReq = requests.post(SERVER_URI+"/dashboard/headers",json = {
-            "applicationId": apps[selectedApp]
+            "applicationId": apps[selectedApp],
+            "apiKey": API_KEY
     })
 
     appData = paraReq.json()["dataParameters"]
@@ -101,49 +108,53 @@ def loggedIn():
     if(not aggr):
         st.header("Metrics")
 
-        metrics = requests.post(SERVER_URI+"/dashboard/metrics",json = {    
-                "clientId": reqClients[0],
-                "applicationId": apps[selectedApp]
-        })
+        if(len(reqClients)==0):
+            st.error("No Metrics Data Found!")
+        else:
+            metrics = requests.post(SERVER_URI+"/dashboard/metrics",json = {    
+                    "clientId": reqClients[0],
+                    "applicationId": apps[selectedApp],
+                    "apiKey": API_KEY
+            })
 
-        metrics = metrics.json()["metrics"]
+            metrics = metrics.json()["metrics"]
 
-        metricRows = []
+            metricRows = []
 
-        for i in range(math.ceil(len(metrics)/3)):
-            metricRows.append(st.columns(3))
+            for i in range(math.ceil(len(metrics)/3)):
+                metricRows.append(st.columns(3))
 
-        for i in range(len(metricRows)):
-            for j in range(min(3,len(metrics)-(3*i))):
-                metricRows[i][j].metric(metrics[i*3+j]["name"], metrics[i*3+j]["value"])
+            for i in range(len(metricRows)):
+                for j in range(min(3,len(metrics)-(3*i))):
+                    metricRows[i][j].metric(metrics[i*3+j]["name"], metrics[i*3+j]["value"])
 
     st.header("Data")
+    if(df.empty):
+        st.error("No Data Found!")
+    else:
+        st.table(df)
 
-    st.table(df)
+        csv = convert_df(df)
 
-    csv = convert_df(df)
-
-    st.sidebar.download_button(
-        label="Download data as CSV",
-        data=csv,
-        file_name='large_df.csv',
-        mime='text/csv',
-    )
+        st.sidebar.download_button(
+            label="Download data as CSV",
+            data=csv,
+            file_name='large_df.csv',
+            mime='text/csv',
+        )
 
     st.sidebar.markdown("<hr />",unsafe_allow_html=True)
 
+    with st.sidebar.expander("More Options"):
+        st.button("Register Application")
+
     with st.sidebar.expander("About"):
         st.write("""
-         The chart above shows some numbers I picked for you.
-         I rolled actual dice for these, so they're *guaranteed* to
-         be random.
+         IoT Management System
      """)
     with st.sidebar.expander("Report Bug"):
-        st.write("""from inspect import Parameter
-
-         The chart above shows some numbers I picked for you.
-         I rolled actual dice for these, so they're *guaranteed* to
-         be random.
+        st.write("""
+        Mailto: suyashc222@gmail.com
      """)
 
 client = MongoClient(os.getenv('MONGO_URI'))
