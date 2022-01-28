@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+streamlit = "*"
+requests = "*"
+pandas = "*"
+pymongo = {extras = ["srv"], version = "*"}
+python-dotenv = "*"
+streamlit-authenticator = "*"
+pillow = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
