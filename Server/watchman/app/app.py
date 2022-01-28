@@ -18,3 +18,5 @@ def create_app(settings_override=None):
         return "Watchman Running!!"
 
     return app
+
+app = create_app()
