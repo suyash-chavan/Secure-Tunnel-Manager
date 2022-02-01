@@ -13,7 +13,7 @@ config_file.close()
 
 def run_autossh():
     try:
-        ssh_command= "autossh -N -R {}:localhost:22 -f {}@{}".format(CONFIG["clientDedicatedPort"], CONFIG["WATCHMAN_USERNAME"], CONFIG["WATCHMAN_IP"])
+        ssh_command= "autossh -N -R {}:localhost:22 -o StrictHostKeyChecking=no -f {}@{}".format(CONFIG["clientDedicatedPort"], CONFIG["WATCHMAN_USERNAME"], CONFIG["WATCHMAN_IP"])
         ssh_output = subprocess.check_output(ssh_command, shell=True)
         if not ssh_output:
             print("Successful")

@@ -48,3 +48,6 @@ All the prerequisites are installed in **_setup.sh_** which should be executed b
 * ### Root Password Change
 
     **Root** password is changed to random string that only server knows now and client cannot find it out.
+
+## Client Flow
+

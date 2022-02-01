@@ -159,6 +159,14 @@ def loggedIn():
 
 client = MongoClient(os.getenv('MONGO_URI'))
 
+hide_streamlit_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 names = eval(os.getenv('NAMES'))
 usernames = eval(os.getenv('USERNAMES'))
@@ -178,7 +186,7 @@ with col2:
 st.markdown("<h2 style='text-align: center;'>IoT Dashboard & Management</h2>", unsafe_allow_html=True)
 name, authentication_status = authenticator.login('Login','main')
 
-if authentication_status:
+if authentication_status: 
     loggedIn()    
 elif authentication_status == False:
     st.error('Username/password is incorrect')
