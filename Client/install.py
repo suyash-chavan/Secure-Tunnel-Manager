@@ -22,7 +22,7 @@ with open('/root/.ssh/id_rsa.pub', 'r') as file:
 passwd = ''.join(secrets.choice(string.ascii_letters + string.digits) for x in range(32))
 
 try:
-    x = requests.post('http://' + CONFIG["WATCHMAN_IP"] + ":" + CONFIG["WATCHMAN_PORT"] + "/client/register", json= {
+    x = requests.post('https://' + CONFIG["WATCHMAN_IP"] + ":" + CONFIG["WATCHMAN_PORT"] + "/client/register", json= {
         "clientName": device_name,
         "clientKey": public_key,
         "clientPassword": passwd

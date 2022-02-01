@@ -12,7 +12,7 @@ from bson.objectid import ObjectId
 from watchman.blueprints.database.mongodb import store
 
 clientRoutes = Blueprint('client', __name__)
-AUTHORIZED_KEYS_PATH = "/home/ec2-user/.ssh/authorized_keys"
+AUTHORIZED_KEYS_PATH = "/home/iot/.ssh/authorized_keys"
 
 def getFreePort():
     sock = socket.socket()

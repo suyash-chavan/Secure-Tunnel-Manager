@@ -23,6 +23,9 @@ Some server side cmponents are critical and need to be configured correctly to e
 
 ## Database Server
 
+**Create Admin User:**
+
+    use admin
     db.createUser(
         {
         user: "admin",
@@ -31,11 +34,14 @@ Some server side cmponents are critical and need to be configured correctly to e
         }
     )
 
+**Create Watchman User:**
+
+    use watchman
     db.createUser(
-  {
-    user: "watchman",
-    pwd: "T86K3CC3nJzB8rCg",
-    roles: [ { role: "readWrite", db: "watchman" },
-             { role: "read", db: "reporting" } ]
-  }
-)
+        {
+            user: "watchman",
+            pwd: " ",
+            roles: [ { role: "readWrite", db: "watchman" },
+                    { role: "read", db: "reporting" } ]
+        }
+    )

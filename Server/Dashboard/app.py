@@ -33,116 +33,122 @@ def loggedIn():
     apps = {}
     appres = appreq.json()
 
+    appsAvailable = False
+
     for app in appres["applications"]:
+        appsAvailable = True
         apps[app["applicationName"]] = app["applicationId"]
 
-    selectedApp = st.sidebar.selectbox(
-    "Application",
-    apps.keys())
+    if(not appsAvailable):
+        st.sidebar.write("No Applications Available")
+    else:
+        selectedApp = st.sidebar.selectbox(
+        "Application",
+        apps.keys())
 
-    clientReq = requests.post(SERVER_URI+"/dashboard/clients",json = {
-            "applicationId": apps[selectedApp],
-            "apiKey": API_KEY
-    })
+        clientReq = requests.post(SERVER_URI+"/dashboard/clients",json = {
+                "applicationId": apps[selectedApp],
+                "apiKey": API_KEY
+        })
 
-    clients = {}
+        clients = {}
 
-    for client in clientReq.json()["clients"]:
-        clients[client["clientName"]] = client["clientId"]
+        for client in clientReq.json()["clients"]:
+            clients[client["clientName"]] = client["clientId"]
 
-    aggr = st.sidebar.checkbox('Data Aggregation')
-    
-    if(not aggr):
-        devices = st.sidebar.selectbox(
-        "Device Name",
+        aggr = st.sidebar.checkbox('Data Aggregation')
+        
+        if(not aggr):
+            devices = st.sidebar.selectbox(
+            "Device Name",
+            clients.keys())
+
+            devices = [devices]
+        else:
+            devices = st.sidebar.multiselect(
+        'Device Name',
         clients.keys())
 
-        devices = [devices]
-    else:
-        devices = st.sidebar.multiselect(
-     'Device Name',
-     clients.keys())
+        reqClients = []
 
-    reqClients = []
+        for device in devices:
+            if(device!=None):
+                reqClients.append(clients[device])
 
-    for device in devices:
-        if(device!=None):
-            reqClients.append(clients[device])
+        dataReq = requests.post(SERVER_URI+"/dashboard/data",json = {
+                "clientId": reqClients,
+                "applicationId": apps[selectedApp],
+                "apiKey": API_KEY
+        })
 
-    dataReq = requests.post(SERVER_URI+"/dashboard/data",json = {
-            "clientId": reqClients,
-            "applicationId": apps[selectedApp],
-            "apiKey": API_KEY
-    })
+        dataJson = dataReq.json()["data"]
 
-    dataJson = dataReq.json()["data"]
+        data = []
 
-    data = []
+        paraReq = requests.post(SERVER_URI+"/dashboard/headers",json = {
+                "applicationId": apps[selectedApp],
+                "apiKey": API_KEY
+        })
 
-    paraReq = requests.post(SERVER_URI+"/dashboard/headers",json = {
-            "applicationId": apps[selectedApp],
-            "apiKey": API_KEY
-    })
+        appData = paraReq.json()["dataParameters"]
 
-    appData = paraReq.json()["dataParameters"]
+        headers = []
+        parameters = []
 
-    headers = []
-    parameters = []
+        for header in appData:
+            headers.append(header)
+            parameters.append(appData[header])
 
-    for header in appData:
-        headers.append(header)
-        parameters.append(appData[header])
+        for dataPoint in dataJson:
+            row = []
 
-    for dataPoint in dataJson:
-        row = []
+            for header in headers:
+                if(header in dataPoint.keys()):
+                    row.append(dataPoint[header])
 
-        for header in headers:
-            if(header in dataPoint.keys()):
-                row.append(dataPoint[header])
+            data.append(row)
 
-        data.append(row)
+        df = pd.DataFrame(
+        data, columns=parameters)
 
-    df = pd.DataFrame(
-    data, columns=parameters)
+        if(not aggr):
+            st.header("Metrics")
 
-    if(not aggr):
-        st.header("Metrics")
+            if(len(reqClients)==0):
+                st.error("No Metrics Data Found!")
+            else:
+                metrics = requests.post(SERVER_URI+"/dashboard/metrics",json = {    
+                        "clientId": reqClients[0],
+                        "applicationId": apps[selectedApp],
+                        "apiKey": API_KEY
+                })
 
-        if(len(reqClients)==0):
-            st.error("No Metrics Data Found!")
+                metrics = metrics.json()["metrics"]
+
+                metricRows = []
+
+                for i in range(math.ceil(len(metrics)/3)):
+                    metricRows.append(st.columns(3))
+
+                for i in range(len(metricRows)):
+                    for j in range(min(3,len(metrics)-(3*i))):
+                        metricRows[i][j].metric(metrics[i*3+j]["name"], metrics[i*3+j]["value"])
+
+        st.header("Data")
+        if(df.empty):
+            st.error("No Data Found!")
         else:
-            metrics = requests.post(SERVER_URI+"/dashboard/metrics",json = {    
-                    "clientId": reqClients[0],
-                    "applicationId": apps[selectedApp],
-                    "apiKey": API_KEY
-            })
+            st.table(df)
 
-            metrics = metrics.json()["metrics"]
+            csv = convert_df(df)
 
-            metricRows = []
-
-            for i in range(math.ceil(len(metrics)/3)):
-                metricRows.append(st.columns(3))
-
-            for i in range(len(metricRows)):
-                for j in range(min(3,len(metrics)-(3*i))):
-                    metricRows[i][j].metric(metrics[i*3+j]["name"], metrics[i*3+j]["value"])
-
-    st.header("Data")
-    if(df.empty):
-        st.error("No Data Found!")
-    else:
-        st.table(df)
-
-        csv = convert_df(df)
-
-        st.sidebar.download_button(
-            label="Download data as CSV",
-            data=csv,
-            file_name='large_df.csv',
-            mime='text/csv',
-        )
-
+            st.sidebar.download_button(
+                label="Download data as CSV",
+                data=csv,
+                file_name='large_df.csv',
+                mime='text/csv',
+            )
+        
     st.sidebar.markdown("<hr />",unsafe_allow_html=True)
 
     with st.sidebar.expander("More Options"):
