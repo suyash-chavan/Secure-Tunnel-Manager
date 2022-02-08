@@ -1,3 +1,4 @@
+from email.mime import application
 from flask import (
     Blueprint,
     make_response,
@@ -29,6 +30,8 @@ def listApplications():
     for app in store["applications"].find():
         applications.append({"applicationName": app["applicationName"], "applicationId": str(app["_id"])})
 
+    print(applications)
+
     return make_response(jsonify({
             "applications": applications,
             "status": "Success"
@@ -57,7 +60,10 @@ def appData():
     data = []
 
     for clientId in clientIds:
-        data.extend(store["clients"].find_one({"_id": ObjectId(clientId)})["clientData"][applicationId])
+        try:
+            data.extend(store["clients"].find_one({"_id": ObjectId(clientId)})["clientData"][applicationId])
+        except Exception as e:
+            pass
 
     data.sort(reverse=True, key = lambda d:d["timestamp"])
 
@@ -82,9 +88,81 @@ def clientMetrics():
     appId = request.json["applicationId"]
     clientId = request.json["clientId"]
 
-    metrics = store["clients"].find_one({"_id": ObjectId(clientId)})["clientMetrics"][appId]
+    metricVars = store["applications"].find_one({"_id": ObjectId(appId)})["metricParameters"]
 
+    metricImages = store["applications"].find_one({"_id": ObjectId(appId)})["metricImages"]
+
+    metricReceived = store["clients"].find_one({"_id": ObjectId(clientId)})["clientMetrics"][appId]
+
+    metrics = {}
+    images = {}
+
+    for metricHeader in metricVars.keys():
+        if metricVars[metricHeader] in metricReceived.keys():
+            try:
+                metrics[metricHeader] = metricReceived[metricVars[metricHeader]]
+            except Exception as e:
+                pass
+
+            try:
+                images[metricHeader] = metricImages[metricVars[metricHeader]]
+            except Exception as e:
+                pass
+            
     return make_response(jsonify({
             "metrics": metrics,
+            "images": images,
+            "status": "Success"
+        }), 200)
+
+@dashboardRoutes.route('/dashboard/application/register', methods = ['POST'])
+def registerApplication():
+    reqJson = request.json
+
+    applicationName = reqJson["applicationName"]
+    dataParameters = reqJson["dataParameters"]
+    metricParameters = reqJson["dataParameters"]
+
+    store["applications"].insert_one({
+        "applicationName": applicationName,
+        "dataParameters": dataParameters,
+        "metricParameters": metricParameters,
+        "clients": []
+    })
+            
+    return make_response(jsonify({
+            "status": "Success"
+        }), 200)
+
+@dashboardRoutes.route('/dashboard/application/info', methods = ['POST'])
+def applicationInfo():
+    reqJson = request.json
+
+    applicationId = reqJson["applicationId"]
+
+    applicationInfo = store["applications"].find_one({"_id": ObjectId(applicationId)})
+    
+    applicationInfoRes = {}
+    applicationInfoRes["applicationName"] = applicationInfo["applicationName"]
+    applicationInfoRes["dataParameters"] = applicationInfo["dataParameters"]
+    applicationInfoRes["metricParameters"] = applicationInfo["metricParameters"]
+            
+    return make_response(jsonify({
+            "applicationInfo": applicationInfoRes,
+            "status": "Success"
+        }), 200)
+
+@dashboardRoutes.route('/dashboard/application/update', methods = ['POST'])
+def applicationUpdate():
+    reqJson = request.json
+
+    applicationId = reqJson["applicationId"]
+    applicationName = reqJson["applicationName"]
+    dataParameters = reqJson["dataParameters"]
+    metricParameters = reqJson["metricParameters"]
+
+    store["applications"].update_one({"_id": ObjectId(applicationId)},{"$set": {"applicationName": applicationName, "dataParameters": dataParameters, "metricParameters": metricParameters}})
+            
+    return make_response(jsonify({
             "status": "Success"
         }), 200)

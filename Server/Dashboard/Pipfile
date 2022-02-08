@@ -7,12 +7,16 @@ name = "pypi"
 streamlit = "*"
 requests = "*"
 pandas = "*"
-pymongo = {extras = ["srv"], version = "*"}
 python-dotenv = "*"
 streamlit-authenticator = "*"
 pillow = "*"
+streamlit-echarts = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.8"
+
+[packages.pymongo]
+extras = [ "srv",]
+version = "*"

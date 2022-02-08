@@ -4,7 +4,7 @@
 
 * ## Dockerized Multiple Server Instances under Kubernetes and Load Balancing
 
-* ## Client on demand Persistant Secure-Tunnel rather than Continious Persistency using Web Sockets
+* ## Client on demand Persistant Secure-Tunnel rather than Continious Persistency using MQTT
 
 * ## Web based Shell access to remote devices
 

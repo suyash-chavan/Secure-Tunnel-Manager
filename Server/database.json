@@ -4,7 +4,9 @@
             {
                 "applicationId": "",
                 "applicationName": "",
-                "applicationDataParameters": {"Timestamp": "timestamp"},
+                "dataParameters": {"Timestamp": "timestamp", "People Waring masks": "withMask"},
+                "metricParameters": {"Timestamp": "timestamp", "People Waring masks": "withMask"},
+                "metricImages": {""},
                 "clients":[
                     "clientID"
                 ]   
