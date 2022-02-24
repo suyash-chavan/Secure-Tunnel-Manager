@@ -100,6 +100,19 @@ We can use Reverse SSH tunnel, which will be initiated by Edge device to our Ser
 
 Now, let's see server side and client side configuration to setup such functionality.
 
+## Comparing with top IoT tunneling services
+
+|               | Our Product | AWS Secure Tunnel | Google IoT Core | Balena |
+|---------------|-------------|-------------------|-----------------|--------|
+| Cost Effective         |       ✓      |         ✕          |       ✕          |    ✕    |
+| Security      |      ✓       |         ✓          |         ✓        |    ✓    |
+| Tunneling Availablity |      ✓       |          ✓         |         ✕        |    ✓    |
+| Speed |      ✓       |         ✓          |        ✓         |    ✕    |
+| Data Analysis Dashboard |      ✓       |         ✕          |        ✕         |    ✕    |
+| Deployed Code Security |      ✓       |         ✕          |        ✕         |    ✕    |
+
+Our most interesting feature is preventing read access of code from other users of IoT device especially for patentised products which is not available on any IoT service providing platform.
+
 ## Client Side Configuration
 
 Client side components are supposed to to executed on the remote client which is situated behind NAT.
