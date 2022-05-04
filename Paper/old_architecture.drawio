@@ -1,0 +1,211 @@
+<mxfile host="65bd71144e">
+    <diagram id="7zL5q8D5rJ7wN6jn2v3N" name="Page-1">
+        <mxGraphModel dx="3289" dy="2867" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="6" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-506" y="-160" width="1840" height="950" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image;image=img/lib/allied_telesis/storage/Datacenter_Server_Half_Rack_ToR.svg;flipH=1;" vertex="1" parent="1">
+                    <mxGeometry x="-160" y="265.4" width="88.2" height="114.6" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/lib/active_directory/workstation_client.svg;direction=east;flipH=0;" vertex="1" parent="1">
+                    <mxGeometry x="899" y="270" width="93.5" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="" style="endArrow=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;rounded=1;endFill=0;" edge="1" parent="1" source="3" target="7">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="300" y="420" as="sourcePoint"/>
+                        <mxPoint x="350" y="370" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="70" y="165"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="10" value="" style="endArrow=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;rounded=1;endFill=0;exitX=0;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="5" target="7">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="682.6957561267184" y="270" as="sourcePoint"/>
+                        <mxPoint x="760" y="140" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="737" y="165"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="11" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="150" y="420" width="510" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="" style="endArrow=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;rounded=1;endFill=0;" edge="1" parent="1" source="3" target="11">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="72.69575612671838" y="600" as="sourcePoint"/>
+                        <mxPoint x="150" y="500" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="70" y="510"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="13" value="" style="endArrow=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;rounded=1;endFill=0;" edge="1" parent="1" source="5" target="11">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="742.7396641574985" y="419.9999999999999" as="sourcePoint"/>
+                        <mxPoint x="820" y="555.4" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="740" y="510"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="1. Edge Registration" style="label;whiteSpace=wrap;html=1;align=center;verticalAlign=bottom;spacingLeft=0;spacingBottom=4;imageAlign=center;imageVerticalAlign=top;image=img/clipart/Gear_128x128.png" vertex="1" parent="1">
+                    <mxGeometry x="341" y="-70" width="145" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="2. Persistent SSH" style="label;whiteSpace=wrap;html=1;align=center;verticalAlign=bottom;spacingLeft=0;spacingBottom=4;imageAlign=center;imageVerticalAlign=top;image=img/clipart/Gear_128x128.png" vertex="1" parent="1">
+                    <mxGeometry x="351" y="660" width="126" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="&lt;font style=&quot;font-size: 22px&quot;&gt;Edge Master&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-330" y="307.7" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="&lt;font style=&quot;font-size: 22px&quot;&gt;Edge Slave&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1009" y="302.3" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="150" y="40" width="510" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="34">
+                    <mxGeometry width="510" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=1;width=20;" edge="1" parent="34">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="510" y="63" as="sourcePoint"/>
+                        <mxPoint y="63" as="targetPoint"/>
+                        <Array as="points"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="41" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;HTTP/S&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="18">
+                    <mxGeometry x="0.7922" y="3" relative="1" as="geometry">
+                        <mxPoint x="-23" y="-2" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="19" value="" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-180;" vertex="1" parent="34">
+                    <mxGeometry x="132" y="24" width="264" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;shadow=0;width=20;" edge="1" parent="34">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint y="185.00000000000006" as="sourcePoint"/>
+                        <mxPoint x="510" y="185.00000000000006" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="255" y="185.00000000000006"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-360;" vertex="1" parent="34">
+                    <mxGeometry x="132" y="145.00000000000003" width="264" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;HTTP/S&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="34">
+                    <mxGeometry x="479.99666666666656" y="185" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="Slave Name, Root Password, Public SSH Key" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="34">
+                    <mxGeometry x="159" y="49" width="210" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="Slave ID, Dedicated Port - Y" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="34">
+                    <mxGeometry x="159" y="170" width="210" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="150" y="380" width="510" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="35">
+                    <mxGeometry width="510" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=1;width=20;" edge="1" parent="35">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="510" y="63" as="sourcePoint"/>
+                        <mxPoint y="63" as="targetPoint"/>
+                        <Array as="points"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="43" value="SSH Tunnel" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="37">
+                    <mxGeometry x="0.8147" y="-2" relative="1" as="geometry">
+                        <mxPoint x="-7" y="3" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="38" value="" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-180;" vertex="1" parent="35">
+                    <mxGeometry x="132" y="24" width="264" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;shadow=0;width=20;" edge="1" parent="35">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint y="185.00000000000006" as="sourcePoint"/>
+                        <mxPoint x="510" y="185.00000000000006" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="255" y="185.00000000000006"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="40" value="" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-360;" vertex="1" parent="35">
+                    <mxGeometry x="132" y="145.00000000000003" width="264" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="Reverse SSH Tunnel" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="35">
+                    <mxGeometry x="450.003333333333" y="185" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" value="Secure Tunnel mapping Slave Port 22 to Master Port Y" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="35">
+                    <mxGeometry x="150" y="49" width="210" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="85" value="Secure Tunneling in Slave by Master for debugging and maintenance" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="35">
+                    <mxGeometry x="159" y="170" width="210" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="Port X" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="660" y="429" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="Port 22" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="429" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="Port 22" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="660" y="550" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="Port Y" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="550" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="87" value="1. Get Slave Name&lt;br&gt;2. Generate Random Root Password" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="710" y="-90" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="88" value="1. Creating Slave in DB and storing Root Password&lt;br&gt;2. Authorising Public and storing its Hash for verification&lt;br&gt;3. Generating dedicated port such that is is not allocated to any Slave" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="-330" y="130" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="90" value="1. Changing Root Password&lt;br&gt;2. Creating Secure Tunnel Service and enabling it" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="820" y="20" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" value="" style="curved=1;endArrow=classic;html=1;rounded=1;shadow=0;fontSize=11;endFill=1;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="87">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="660" y="230" as="sourcePoint"/>
+                        <mxPoint x="660" y="100" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="810" y="100"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="99" value="" style="curved=1;endArrow=classic;html=1;rounded=1;shadow=0;fontSize=11;endFill=1;edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" target="90">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="660" y="220" as="sourcePoint"/>
+                        <mxPoint x="670" y="110" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="920" y="220"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="100" value="" style="endArrow=classic;html=1;rounded=1;shadow=0;fontSize=11;endFill=1;edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="88">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="150" y="100" as="sourcePoint"/>
+                        <mxPoint x="-20.000000000000455" y="150" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="-190" y="100"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="102" value="" style="endArrow=classic;html=1;rounded=1;shadow=0;fontSize=11;endFill=1;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="88" target="7">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-30.000000000000455" y="179" as="sourcePoint"/>
+                        <mxPoint x="229.99999999999955" y="29" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="-190" y="228"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
